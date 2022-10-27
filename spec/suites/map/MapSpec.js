@@ -2410,4 +2410,52 @@ describe("Map", () => {
 			expect(map.getCenter()).to.be.nearLatLng([-10.9196177602, 10.9863281250]);
 		});
 	});
+
+	describe("#project", () => {
+		it("returns the pixel coordinate in meters relative to the CRS origin", () => {
+			var center = L.latLng([41.8781, -87.6298]);
+			map.setView(center, 5);
+			var p = map.project(center, 5);
+
+			expect(p.x).to.be.equal(2101.935217777778);
+			expect(p.y).to.be.equal(3044.739042007935);
+		});
+
+		it("returns the pixel coordinate in meters relative to the CRS origin", () => {
+			// default CRS latlng coordinates
+			var crs = L.latLng({
+				"lat": 85.0511287798066,
+				"lng": -180
+			});
+			map.setView(crs, 5);
+			var p = map.project(crs, 5);
+
+			expect(p.x).to.be.lessThan(1);
+			expect(p.y).to.be.lessThan(1);
+		});
+	});
+
+	describe("#unproject", () => {
+		it("returns the unprojected meter coordinates back to geo coordinates", () => {
+			var point = L.point({
+				"x": 4096,
+				"y": 4096
+			});
+			map.setView([41.8, -87.6], 5);
+			var coord = map.unproject(point, 5);
+
+			expect(coord).to.be.nearLatLng([0, 0]);
+		});
+
+		it("returns the unprojected meter coordinates back to geo coordinates", () => {
+			var point = L.point({
+				"x": 4790.272,
+				"y": 2760.4803992561147
+			});
+			map.setView([0, 0], 5);
+			var coord = map.unproject(point, 5);
+
+			expect(coord).to.be.nearLatLng([50.5, 30.51]);
+		});
+	});
 });
