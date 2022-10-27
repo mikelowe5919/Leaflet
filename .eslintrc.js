@@ -10,7 +10,6 @@ module.exports = {
 		'docs/examples/extending/extending-2-layers.md',
 		'docs/_posts/201*',
 		'docs/_site',
-		'build/integrity.js'
 	],
 	root: true,
 	globals: {
@@ -41,7 +40,6 @@ module.exports = {
 		'wrap-iife': 'off',
 		// TODO: Re-enable the rules below and fix the linting issues.
 		'no-invalid-this': 'off',
-		'no-var': 'off',
 		'prefer-spread': 'off'
 	},
 	overrides: [
